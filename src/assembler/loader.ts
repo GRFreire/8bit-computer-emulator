@@ -1,10 +1,16 @@
 import { promises as fs } from 'fs';
 
+import AppError from './appError';
+
 export default async function loader(filePath: string): Promise<string[]> {
-  const fileBuffer = await fs.readFile(filePath);
-  const fileContent = fileBuffer.toString();
+  try {
+    const fileBuffer = await fs.readFile(filePath);
+    const fileContent = fileBuffer.toString();
 
-  const lines = fileContent.split('\n');
+    const lines = fileContent.split('\n');
 
-  return lines;
+    return lines;
+  } catch (error) {
+    throw new AppError('Assembly program was not found');
+  }
 }
