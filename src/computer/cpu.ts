@@ -62,7 +62,7 @@ class CPU {
         this.registers.set('A', SUM);
 
         // Set Carry Flag
-        if (SUM > 2 ** (8 - 1) - 1) this.registers.set('C', 1);
+        if (SUM & 0b10000000) this.registers.set('C', 1);
         else this.registers.set('C', 0);
 
         // Set Zero Flag
@@ -156,12 +156,10 @@ class CPU {
         return false;
       }
       case instructions.OUT: {
-        const byteSize = 8;
-
         this.fetch();
 
         const A = this.registers.get('A');
-        const OUT = A > 2 ** (byteSize - 1) ? A - 2 ** byteSize : A;
+        const OUT = A & 0b10000000 ? -(A & ~0b10000000) : A;
 
         console.log(`dec: ${OUT} bin: ${A.toString(2)}`);
         return false;
