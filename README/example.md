@@ -16,8 +16,8 @@ LDI 0    ; Load 0 to the A register
 JMP @inc ; Jump to the inc flag
 
 @inc:
-ADD one  ; Add one
 OUT      ; Print the value of A register
+ADD one  ; Add one
 JCF @dec ; Jump to dec label if carry flag is set
 JMP @inc ; Jump to inc label otherwise
 
